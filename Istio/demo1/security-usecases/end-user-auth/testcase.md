@@ -1,8 +1,8 @@
 ```
 Enforce end-user ("origin") authentication for the productpage service, using JSON Web Tokens (JWT)
-Using JWT authentication alongside mTLS (and not JWT by itself), because plaintext JWTs are not themselves encrypted, only signed. 
-Forged or intercepted JWTs could compromise your service mesh. We're building on the mutual TLS authentication already configured 
-for the default namespace
+Using JWT authentication alongside mTLS (and not JWT by itself), because plaintext JWTs are not 
+themselves encrypted, only signed. Forged or intercepted JWTs could compromise your service mesh. 
+We're building on the mutual TLS authentication already configured for the default namespace
 ```
 1. Run the below commands to enforce End-User JWT authentication
 ```
