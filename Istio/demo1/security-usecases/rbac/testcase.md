@@ -1,5 +1,6 @@
 ```
-Istio Authorization builds on Kubernetes Role-based Access Control (RBAC), which maps "subjects" (such as service accounts) to Roles.
+Istio Authorization builds on Kubernetes Role-based Access Control (RBAC), which maps "subjects" 
+(such as service accounts) to Roles.
 ```
 
 1. Run below commands to add RBAC to productpage and other pages
