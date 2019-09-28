@@ -1,0 +1,19 @@
+apiVersion: "authenication.istio.io/v1alpha1"
+kind: Policy
+metadata:
+  name: "disable-mtls"
+  namespace: "default"
+spec:
+  peers:
+  - mtls:
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: "DestinationRule"
+metadata:
+  name: "disable--mtls"
+  namespace: "default"
+spec:
+  host: "*.default.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: PERMISSIVE

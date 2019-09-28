@@ -1,0 +1,21 @@
+apiVersion: "authenication.istio.io/v1alpha1"
+kind: Policy
+metadata:
+  name: "enable-mtls-pp-details"
+  namespace: "default"
+spec:
+  targerts:
+  - name: details
+  peers:
+  - mtls: {}
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: "DestinationRule"
+metadata:
+  name: "enable-mtls-pp-details"
+  namespace: "default"
+spec:
+  host: "details.default.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
