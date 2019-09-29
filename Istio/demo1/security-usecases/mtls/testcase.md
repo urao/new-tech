@@ -21,6 +21,9 @@ kubectl apply -f sleep-securitydemo.yaml
 kubectl exec $(kubectl get pod -l app=sleep -n default -o jsonpath={.items..metadata.name}) \
                 -n default -- curl http://reviews.default:9080/reviews/1
 ```
+
+Note. Check Kiali UI -> Istio Config section and see if there are any warnings coming from validation system.
+
 PS: If you are running kubernetes v1.16, sleep.yaml will not work, run the below command and re-run
 ```
 kubectl convert -f ./sleep.yaml --output-version apps/v1 > <file_name>.yaml
