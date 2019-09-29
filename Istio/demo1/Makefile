@@ -1,10 +1,12 @@
+# Deploy Istio using minikube
 SHELL := /bin/bash
 
 # **** INPUT VARIABLES ***** #
-CLUSTER_NAME ?= $(shell cat /etc/hostname 2>/dev/null || echo $$(hostname)) 
+CLUSTER_NAME ?= $(shell cat /etc/hostname 2>/dev/null || echo $(hostname)) 
 API_SERVER_IP ?= $(shell ip -4 route get 8.8.8.8 | awk {'print $7'} | tr -d '\n')
 K8S_VERSION ?= 1.16
 ISTIO_VERSION ?= 1.2.6
+ISTIO_AUTH ?= false
 
 OS_TYPE_CENTOS := $(shell command -v yum;)
 OS_TYPE_UBUNTU := $(shell command -v apt-get;)
@@ -69,6 +71,15 @@ calico: bootstrap minikube
 	@echo ""
 	kubectl apply -f https://docs.projectcalico.org/v3.9/manifests/calico.yaml
 
+# Install k8s dashboard
+.PHONY: dashboard
+dashboard: bootstrap minikube
+	@# Deploy dashboard 
+	@echo ""
+	@echo "DEPLOY DASHBOARD:"
+	@echo ""
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
 # Install weave scope 
 .PHONY: weave
 weave: bootstrap minikube
@@ -77,6 +88,25 @@ weave: bootstrap minikube
 	@echo "DEPLOY WEAVE SCOPE:"
 	@echo ""
 	kubectl apply -f "https://cloud.weave.works/k8s/scope.yaml?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+
+# Install Istio 
+.PHONY: istio
+istio: bootstrap minikube calico weave dashboard
+	@# Deploy istio 
+	@echo ""
+	@echo "DEPLOY ISTIO:"
+	ISTIO_LOCATION=`pwd`
+	curl -L https://git.io/getLatestIstio | ISTIO_VERSION=$(ISTIO_VERSION) sh -
+	export PATH="$PATH:/$(ISTIO_LOCATION)/istio-$(ISTIO_VERSION)/bin"
+	cp $(ISTIO_LOCATION)/istio-$(ISTIO_VERSION)/bin/istioctl /usr/local/bin
+	cd $(ISTIO_LOCATION)/istio-$(ISTIO_VERSION)
+	for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
+ifdef ISTIO_AUTH
+	kubectl apply -f install/kubernetes/istio-demo-auth.yaml
+else
+	kubectl apply -f install/kubernetes/istio-demo.yaml
+endif
+
 
 # Default Target
 .PHONY: usage

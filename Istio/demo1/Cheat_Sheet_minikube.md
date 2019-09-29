@@ -12,6 +12,9 @@ minikube delete
 minikube status
 minikube addons list
 minikube addons enable metrics-server
+minikube dashboard
+minikube dashboard --url=true
+minikube update-context
 ```
 
 ## Reference
