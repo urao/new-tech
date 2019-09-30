@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   rules:
-  - services: ["productpage.default.svc.cluster.local", "details.default.svc.cluster.local"]
+  - services: ["details.default.svc.cluster.local", "reviews.default.svc.cluster.local"]
     methods: ["GET"]
 ---
 apiVersion: "rbac.istio.io/v1alpha1"
