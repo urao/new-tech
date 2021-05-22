@@ -7,10 +7,17 @@ argo delete my-wf
 argo delete @latest
 argo delete --all
 
-kubectl get deployment -n argo-events --no-headers=true | awk '/group-1-/{print $1}' | xargs kubectl delete -n argo-events deployment
-kubectl get pods -n argo-events --no-headers=true | awk '/group-1-/{print $1}' | xargs kubectl delete -n argo-events pod
+kubectl get deployment -n argo-events --no-headers=true | awk '/group-1-/{print $1}' | xargs \
+          kubectl delete -n argo-events deployment
+kubectl get pods -n argo-events --no-headers=true | awk '/group-1-/{print $1}' | xargs \
+          kubectl delete -n argo-events pod
+
+
 
 ```
+
+
+
 
 
 ## References
