@@ -26,6 +26,7 @@ esxcli hardware memory get
 esxcli network nic list
 for X in 0 1; do echo -n "NUMA${X}: "; cpuList=`vsish -e ls /hardware/numa/${X}/pcpus`; echo $cpuList; done
 vsish -e cat /net/pNics/vmnic4/properties | grep NUMA
+for X in 0 1 2 3 4 5 6 7 8 9 10 11; do echo -n "${X}"; vsish -e cat /net/pNics/vmnic${X}/properties | grep NUMA; done
 ```
 
 * Firmware version of the NIC
