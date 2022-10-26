@@ -29,6 +29,7 @@ vsish -e cat /net/pNics/vmnic4/properties | grep NUMA
 for X in 0 1 2 3 4 5 6 7 8 9 10 11; do echo -n "${X}"; vsish -e cat /net/pNics/vmnic${X}/properties | grep NUMA; done
 lspci
 lspci -vvv
+esxcli hardware pci list
 ```
 
 * Firmware version of the NIC
