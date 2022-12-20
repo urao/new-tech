@@ -34,7 +34,9 @@ esxcli hardware pci list
 
 * Firmware version of the NIC
 ```
+esxcli network nic list
 esxcli network nic get -n vmnic4
+esxcli software vib list | grep i40en
 ```
 
 * Stats
