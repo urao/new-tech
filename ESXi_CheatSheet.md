@@ -55,3 +55,15 @@ esxcli storage filesystem list
 ```
 esxcli network vm list
 ```
+
+* Upgrade NIC firmware
+```
+Download the firmware package from VMware Connect
+Upload the package onto ESXi datastore, using datastore browser
+Extract the contents of the driver zip file
+Enter the host into maintenance mode
+esxcli software vib install -v <PATH_TO_VIB_FILE>
+Restart the ESXi host
+Check the firmware
+esxcli network nic get -n vmnicX
+```
