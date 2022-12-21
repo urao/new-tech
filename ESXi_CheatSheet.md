@@ -67,3 +67,9 @@ Restart the ESXi host
 Check the firmware
 esxcli network nic get -n vmnicX
 ```
+
+* Stop and Reboot Host
+```
+esxcli system shutdown poweroff --reason "shutting down"
+esxcli system shutdown reboot --reason "restarting.."
+```
